@@ -1,0 +1,54 @@
+getgenv().autoTap = true;
+getgenv().autoRebirth = true;
+getgenv().autoegg = true;
+getgenv().thisvalue = 'hac co lor'
+
+local remotePath = game:GetService("ReplicatedStorage").Aero.AeroRemoteServices;
+
+
+
+local GUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/Patskorn/GUI/main/Daino.lua"))()
+local idk = GUI:new()
+local win = idk:Tap("G102 Hub")
+local tab = idk:Tap("Main")
+local tab1 = idk:Tap("Eggs")
+local tab2 = idk:Tap("Teleport")
+
+win:Toggle("toggle",false,function(value)
+    getgenv().autoTap = value
+    print('autotap is..', value)
+    if value then
+    doTap()
+    end
+end)
+
+function doTap()
+        spawn(function()
+            while autoTap == true do
+            local args = {[1] = 1}
+            remotePath.ClickService.Click:FireServer(unpack(args))
+            wait()
+        end
+    end)
+end
+
+function autoRebirth(rebirthAmount)
+    spawn(function()
+        while autoRebirth == true do
+            local args  = {[1]= rebirthAmount}
+            remotePath.RebirthService.BuyRebirths:FireServer(unpack(args))
+            wait()
+        end
+    end)
+end
+
+function autoegg(eggtype, eggLimit)
+    spawn(function()
+        while wait() do
+            local iteration = 0;
+        if not autoegg or iteration == eggLimit then break end;
+        remotePath.EggService.Purchase:FireServer(eggtype)
+        iteration = iteration +1
+        end
+    end)
+end
