@@ -1,2 +1,1 @@
-# Scripting
-LearningLua
+learning lua is funi
