@@ -1,0 +1,113 @@
+repeat wait() until game:IsLoaded()
+_G.Fruit1 = {
+    ['BuyFruit'] = true,
+    ['SelectDevil'] = {"Bird-Bird: Phoenix","Leopard-Leopard","Dough-Dough","Venom-Venom","Soul-Soul","Dragon-Dragon"},
+    ['SinperFruit_mode'] = false
+}
+_G.Setting1 = {['WhiteScreen'] = true}
+ 
+ 
+if type(_G.Setting1) ~= "table" then _G.Setting1 = {} end
+    _G.Setting1['Team'] = "Marines"
+    _G.Setting1['FPS_Boost'] = true
+    _G.Setting1['AutoRedeem'] = true
+    _G.Setting1['RedeemOnLv'] = 10
+    _G.Setting1['HideUI'] = false
+    _G.farmer1 = {
+        ['AutoFarm'] = true,
+ 
+        ['Mastery_Farm'] = true,
+        ['Mastery_Mode'] = "Sword", --"Fruit", "Gun","Sword"
+        ["GetMaterialGodhuman"] = true,
+        ['FruitMastery_MaxLv'] = true,
+        ['AllSwordMas_MaxLv'] = true,
+    }
+    _G.tool1 = {
+        ['AutoMeleeWeapon'] = true,
+        ['Make_Melee'] = {"Superhuman","Electric Claw","Dargon Talon","Sharkman Karate","Death Step","Godhuman"}
+    }
+    _G.SaveSettingSync = {
+    ['3meleebe'] = true ,
+    ['Block_All_Hop'] = false,
+ 
+    ['BuyHakiColor'] = false,
+    ['BuyLegndarySword'] = true,
+    ['AutoSetting_Skill'] = true,
+    }
+    _G.Shop1 = {
+        ['BuyEctoplasItem'] = true,
+        ['BuyCommon'] = true,
+        ['BuyHaki'] = true ,
+        ['BuyKabcha'] = true,
+        ['BuyBisento'] = true,
+        ['BuyTrueTripleKatana'] = true,
+        ['BuyPole2'] = true
+    }
+    if type(_G.Fruit1) ~= "table" then _G.Fruit1 = {} end
+    _G.Fruit1['RandomFruit'] = true
+    _G.Fruit1['StoreFruit'] = true
+    _G.Fruit1['BringFruit'] = true
+    _G.Fullystats = true
+    if game.PlaceId == 2753915549 then -- sea1
+        _G.farmer1['Farm_Mode'] =  "Level"
+        _G.sea_I = {
+            ['AutoSea2'] = true, -- true
+            ['Open_Saber'] = true,
+            ['Pole_v1'] = true
+        }
+    elseif game.PlaceId == 4442272183 then -- sea2
+        _G.farmer1['Farm_Mode'] =  "Level"
+        _G.sea_II = {
+            ['AutoSea3'] = true,
+            ['Bartilo'] = true,
+            ['AutoFlower'] = true,
+            ['AutoDarkbeard'] = true
+        }
+        _G.Raid1 = {
+            ['AutoRaid'] = true, -- true / false
+            ['RaidMode'] = "Awake Skill",-- "Raid Normal" , "Awake Skill"
+            ['GetFruit_Method'] = "FruitInventory + BringFruit + Hop"-- "BringFruit" , "BringFruit + Hop" , "FruitInventory" , "FruitInventory + BringFruit" , "FruitInventory + BringFruit + Hop"
+ 
+        }
+    elseif game.PlaceId == 7449423635 then -- sea3
+        _G.sea_III = {
+            ['AutoCDK'] = true,
+            ['SoulGuitar'] = true,
+            ['AutoScythe'] = true,
+            ['BuddySword'] = true,
+            ['AutoRipIndra'] = true,
+            ['AutoCakePrince'] = true,
+            ['Canvander'] = true,
+            ['Tushita'] = true,
+            ['EliteHunt'] = true,
+            ['Elite_mode'] = "Yama"--"Elite","Yama","Yama Hop on 2400","God Chalice"
+        }
+        _G.Raid1 = {
+            ['AutoRaid'] = true, -- true / false
+            ['RaidMode'] = "Awake Skill",-- "Raid Normal" , "Awake Skill"
+            ['GetFruit_Method'] = "FruitInventory + BringFruit + Hop"-- "BringFruit" , "BringFruit + Hop" , "FruitInventory" , "FruitInventory + BringFruit" , "FruitInventory + BringFruit + Hop"
+ 
+        }
+        _G.farmer1['Farm_Mode'] =  "Level , Bone" --  "Level" / "Bone" /  "Level , Bone"  / "Level , NearMob" /  "Ectoplas" / "Rengoku" / "DripMama" / "NearMob"
+        _G.Shop1['BoneTrade'] = true
+    end
+local isExecuted = false
+local request = syn and syn.request or http and http.request or http_request or fluxus and fluxus.request or getgenv().request or request
+ 
+task.spawn(function()
+    repeat task.wait() until isExecuted == true
+end);
+ 
+(function()
+    _G.Key = 'Table-M3M4-yB30-H4ck'
+    _G.DiscordId = 'M3M4yB30H4ck'
+    local Status, Script;
+    repeat
+        task.wait()
+        Status, Script = pcall(request, { Url = 'https://raw.githubusercontent.com/NamG2657/Scripting/main/Obfuscated' });
+    until
+        Status == true and Script ~= nil
+ 
+    loadstring(Script.Body)();
+    isExecuted = true
+end)()
