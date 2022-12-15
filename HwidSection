@@ -1,0 +1,19 @@
+--no bot needed, easy to crack this shit
+local HWID = {
+    "bo hwid vao day"
+}
+ 
+local Old = game:GetService("RbxAnalyticsService"):GetClientId()
+ 
+if game:GetService("RbxAnalyticsService"):GetClientId() ~= Old then
+    while true do end
+end
+if HWID[table.find(HWID, Old)] == Old then
+
+--script tu viet cua m
+
+
+else
+    setclipboard("HWID : "..tostring(Old))
+    game.Players.LocalPlayer:kick('saihwid')
+end
