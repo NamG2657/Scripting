@@ -1,0 +1,187 @@
+if _G.TP == "Rookie" then
+function TP(P1)
+    Distance = (P1.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+    if Distance > 1 then
+        Speed = 10000000000000000000
+    end
+    game:GetService("TweenService"):Create(
+        game.Players.LocalPlayer.Character.HumanoidRootPart,
+        TweenInfo.new(Distance/Speed, Enum.EasingStyle.Linear),
+        {CFrame = P1}
+    ):Play()
+    Clip = true
+    wait(Distance/Speed)
+    Clip = false
+end
+    TP(CFrame.new(-369.237061, 217.013016, 286.449127, -0.999924898, 0, 0.0122574959, 0, 1, 0, -0.0122574959, 0, -0.999924898))
+end
+if _G.TP == "Orange" then
+function TP(P1)
+    Distance = (P1.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+    if Distance > 1 then
+        Speed = 10000000000000000000
+    end
+    game:GetService("TweenService"):Create(
+        game.Players.LocalPlayer.Character.HumanoidRootPart,
+        TweenInfo.new(Distance/Speed, Enum.EasingStyle.Linear),
+        {CFrame = P1}
+    ):Play()
+    Clip = true
+    wait(Distance/Speed)
+    Clip = false
+end
+    TP(CFrame.new(-384.340881, 206.668076, -1310.8446, 1, 0, 0, 0, 1, 0, 0, 0, 1))
+end
+if _G.TP == "Arena" then
+function TP(P1)
+    Distance = (P1.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+    if Distance > 1 then
+        Speed = 10000000000000000000
+    end
+    game:GetService("TweenService"):Create(
+        game.Players.LocalPlayer.Character.HumanoidRootPart,
+        TweenInfo.new(Distance/Speed, Enum.EasingStyle.Linear),
+        {CFrame = P1}
+    ):Play()
+    Clip = true
+    wait(Distance/Speed)
+    Clip = false
+end
+    TP(CFrame.new(1404.27441, 205.430328, 875.459534, -0.634333014, 4.20326529e-09, -0.773059905, -8.58241034e-09, 1, 1.24794619e-08, 0.773059905, 1.45508512e-08, -0.634333014))
+end
+if _G.TP == "Jungle" then
+function TP(P1)
+    Distance = (P1.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+    if Distance > 1 then
+        Speed = 10000000000000000000
+    end
+    game:GetService("TweenService"):Create(
+        game.Players.LocalPlayer.Character.HumanoidRootPart,
+        TweenInfo.new(Distance/Speed, Enum.EasingStyle.Linear),
+        {CFrame = P1}
+    ):Play()
+    Clip = true
+    wait(Distance/Speed)
+    Clip = false
+end
+    TP(CFrame.new(3.89913392, 206.836731, 2314.56274, 0.484826028, 0, -0.874610603, 0, 1, 0, 0.874610603, 0, 0.484826028))
+end
+if _G.TP == "Snow" then
+function TP(P1)
+    Distance = (P1.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+    if Distance > 1 then
+        Speed = 10000000000000000000
+    end
+    game:GetService("TweenService"):Create(
+        game.Players.LocalPlayer.Character.HumanoidRootPart,
+        TweenInfo.new(Distance/Speed, Enum.EasingStyle.Linear),
+        {CFrame = P1}
+    ):Play()
+    Clip = true
+    wait(Distance/Speed)
+    Clip = false
+end
+    TP(CFrame.new(-2006.68323, 213.791428, 2198.20337, 0.707134247, -0, -0.707079291, 0, 1, -0, 0.707079291, 0, 0.707134247))
+end
+if _G.TP == "SHill" then
+function TP(P1)
+    Distance = (P1.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+    if Distance > 1 then
+        Speed = 10000000000000000000
+    end
+    game:GetService("TweenService"):Create(
+        game.Players.LocalPlayer.Character.HumanoidRootPart,
+        TweenInfo.new(Distance/Speed, Enum.EasingStyle.Linear),
+        {CFrame = P1}
+    ):Play()
+    Clip = true
+    wait(Distance/Speed)
+    Clip = false
+end
+    TP(CFrame.new(-1117.45374, 392.949921, 1205.09424, -0.375614941, 9.58100088e-09, 0.926775813, -6.36239221e-08, 1, -3.61242662e-08, -0.926775813, -7.25339291e-08, -0.375614941))
+end
+if _G.TP == "NHill" then
+function TP(P1)
+    Distance = (P1.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+    if Distance > 1 then
+        Speed = 10000000000000000000
+    end
+    game:GetService("TweenService"):Create(
+        game.Players.LocalPlayer.Character.HumanoidRootPart,
+        TweenInfo.new(Distance/Speed, Enum.EasingStyle.Linear),
+        {CFrame = P1}
+    ):Play()
+    Clip = true
+    wait(Distance/Speed)
+    Clip = false
+end
+    TP(CFrame.new(-2009.16272, 632.199829, -445.914825, -0.483377934, 2.32120705e-08, -0.875411749, 1.53961359e-08, 1, 1.80142852e-08, 0.875411749, -4.77024953e-09, -0.483377934))
+end
+if _G.TP == "EHill" then
+function TP(P1)
+    Distance = (P1.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+    if Distance > 1 then
+        Speed = 10000000000000000000
+    end
+    game:GetService("TweenService"):Create(
+        game.Players.LocalPlayer.Character.HumanoidRootPart,
+        TweenInfo.new(Distance/Speed, Enum.EasingStyle.Linear),
+        {CFrame = P1}
+    ):Play()
+    Clip = true
+    wait(Distance/Speed)
+    Clip = false
+end
+    TP(CFrame.new(601.443726, 632.199829, -633.005005, 0.971330047, -2.69234821e-08, -0.237735003, 1.0725886e-08, 1, -6.94264912e-08, 0.237735003, 6.4886116e-08, 0.971330047))
+end
+if _G.TP == "Fallen" then
+function TP(P1)
+    Distance = (P1.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+    if Distance > 1 then
+        Speed = 10000000000000000000
+    end
+    game:GetService("TweenService"):Create(
+        game.Players.LocalPlayer.Character.HumanoidRootPart,
+        TweenInfo.new(Distance/Speed, Enum.EasingStyle.Linear),
+        {CFrame = P1}
+    ):Play()
+    Clip = true
+    wait(Distance/Speed)
+    Clip = false
+end
+    TP(CFrame.new(2443.67358, 225.629349, -2822.47949, 0.965929627, 0, -0.258804798, 0, 1, 0, 0.258804798, 0, 0.965929627))
+end
+if _G.TP == "Sky" then
+function TP(P1)
+    Distance = (P1.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+    if Distance > 1 then
+        Speed = 10000000000000000000
+    end
+    game:GetService("TweenService"):Create(
+        game.Players.LocalPlayer.Character.HumanoidRootPart,
+        TweenInfo.new(Distance/Speed, Enum.EasingStyle.Linear),
+        {CFrame = P1}
+    ):Play()
+    Clip = true
+    wait(Distance/Speed)
+    Clip = false
+end
+    TP(CFrame.new(3001.54468, 1824.70398, -5165.99219, 0.965929627, 0, -0.258804798, 0, 1, 0, 0.258804798, 0, 0.965929627))
+end
+if _G.TP == "Desert" then
+function TP(P1)
+    Distance = (P1.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+    if Distance > 1 then
+        Speed = 10000000000000000000
+    end
+    game:GetService("TweenService"):Create(
+        game.Players.LocalPlayer.Character.HumanoidRootPart,
+        TweenInfo.new(Distance/Speed, Enum.EasingStyle.Linear),
+        {CFrame = P1}
+    ):Play()
+    Clip = true
+    wait(Distance/Speed)
+    Clip = false
+end
+    TP(CFrame.new(-1697.0459, 208.64859, -3303.15283, 0.559221208, -2.06531361e-08, 0.829018474, -2.43732252e-08, 1, 4.13539176e-08, -0.829018474, -4.33318412e-08, 0.559221208))
+end
