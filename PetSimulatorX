@@ -1,4 +1,25 @@
-repeat wait() until game:IsLoaded()
+repeat wait()
+until game:IsLoaded() and game.Players.LocalPlayer
+local TimeDelayIntro = tick()
+repeat wait()
+    pcall(function()
+        for i,v in pairs(getconnections(game:GetService("Players").LocalPlayer.PlayerGui["__INTRO"].Frame.Skip.MouseButton1Up)) do
+            v.Function()
+        end
+    end)
+    if tick()-TimeDelayIntro >= 100 then 
+        game:Shutdown()
+    end
+until  not game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("__INTRO")
+repeat wait()
+until game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("Loading") and not game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild("Loading").Enabled and game:GetService("Players").LocalPlayer:FindFirstChild("__LOADED") and game:GetService("Players").LocalPlayer["__LOADED"].Value
+spawn(function()
+    local FPSboost 
+    FPSboost = hookfunction(getsenv(game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.Game.Coins).CoinDamageAnimation,function(p10,p11)
+        return nil
+    end)
+end)
+
 local repo = 'https://raw.githubusercontent.com/wally-rblx/LinoriaLib/main/'
 local plr = game.Players.LocalPlayer
 local Library = loadstring(game:HttpGet(repo .. 'Library.lua'))()
@@ -1494,3 +1515,27 @@ spawn(function()
         end
     end
 end)
+spawn(function()
+    while wait() do 
+        pcall(function()
+            local timedelayHideui = tick()
+            repeat wait()
+            until tick()-timedelayHideui >= 60
+            task.spawn(Library.Toggle)
+        end)
+    end
+end)
+
+--[[local Client = require(game.ReplicatedStorage.Library.Client)
+local FrameworkLibrary = require(game.ReplicatedStorage.Framework.Library)
+local v11 = require(game.ReplicatedStorage.Library.Directory);
+getrenv().require = getgenv().require -- method tvk hihi (iu tvk vcl)
+debug.setupvalue(Client.Network.Invoke, 1, function() return true end)
+debug.setupvalue(Client.Network.Fire, 1, function() return true end)
+for i,v in next,FrameworkLibrary.WorldCmds.GetMap():WaitForChild("EasterEggs"):GetChildren() do
+    if v.Egg.Transparency ~= 1 then 
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = v.Egg.CFrame
+        Client.Network.Invoke("Easter Egg Hunt: Claim", v.Name, (v:GetAttribute("TextureIDX")));
+    end
+end
+]]
