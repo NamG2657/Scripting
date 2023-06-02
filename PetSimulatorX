@@ -25,20 +25,6 @@ local function onButtonClick()
 end
 button.MouseButton1Click:Connect(onButtonClick)
 wait(1)
-local gui = Instance.new("ScreenGui")
-gui.Parent = game.CoreGui
-local button = Instance.new("TextButton")
-button.Text = "Open/Close"
-button.Size = UDim2.new(0, 100, 0, 50)
-button.Position = UDim2.new(0, 10, 1, -60)
-button.AnchorPoint = Vector2.new(0, 1)
-button.Parent = gui
-local function onClick()
-print("clicked")
-task.spawn(Library.Toggle)
-end
-button.MouseButton1Click:Connect(onClick)
-wait(1)
 local repo = 'https://raw.githubusercontent.com/wally-rblx/LinoriaLib/main/'
 local plr = game.Players.LocalPlayer
 local Library = loadstring(game:HttpGet(repo .. 'Library.lua'))()
