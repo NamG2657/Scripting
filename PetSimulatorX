@@ -14,16 +14,16 @@ wait(1)
 local gui = Instance.new("ScreenGui")
 gui.Parent = game.CoreGui
 local button = Instance.new("TextButton")
-button.Text = "Open / Close"
+button.Text = "Open/Close"
 button.Size = UDim2.new(0, 100, 0, 50)
-button.Position = UDim2.new(0, 10, 0.5, -50)
-button.AnchorPoint = Vector2.new(0, 0.5)
+button.Position = UDim2.new(0, 10, 1, -60)
+button.AnchorPoint = Vector2.new(0, 1)
 button.Parent = gui
-local function onButtonClick()
-    print("clicked")
-    task.spawn(Library.Toggle)
+local function onClick()
+print("clicked")
+task.spawn(Library.Toggle)
 end
-button.MouseButton1Click:Connect(onButtonClick)
+button.MouseButton1Click:Connect(onClick)
 wait(1)
 local repo = 'https://raw.githubusercontent.com/wally-rblx/LinoriaLib/main/'
 local plr = game.Players.LocalPlayer
@@ -103,6 +103,35 @@ for _, areaScript in ipairs(game:GetService("ReplicatedStorage")["__DIRECTORY"].
         end
     end
 end
+LeftGroupFarm:AddSlider('MySliderTimeRejoin', {
+    Text = 'Time Rejoin',
+    Default = Settings["Time Rejoin"] or 10,
+    Min = 0,
+    Max = 500,
+    Rounding = 0,
+    Compact = false, 
+    Callback = function(value)
+        SaveSettings("Time Rejoin",value)
+    end
+})
+LeftGroupFarm:AddToggle('MyToggleAutoRejoin', {
+    Text = 'Auto Rejoin',
+    Default = Settings["Auto Rejoin"] or false, -- Default value (true / false)
+    Callback = function(value)
+        SaveSettings("Auto Rejoin",value)
+    end
+})
+spawn(function()
+    while wait() do 
+        pcall(function()
+            if Options.MySliderTimeRejoin.Value and Options.MyToggleAutoRejoin.Value then
+                local TimeDelay = tick()
+                repeat wait() until tick()-TimeDelay >= Options.MySliderTimeRejoin.Value*60 
+                game:GetService("TeleportService"):Teleport(game.PlaceId, game:GetService("Players").LocalPlayer)
+            end
+        end)
+    end
+end)
 LeftGroupFarm:AddDropdown('MyDropdownSelectAreas', {
     Values = areas,
     Default = Settings["Select Areas"] or 1, -- number index of the value / string
@@ -126,6 +155,13 @@ LeftGroupFarm:AddToggle('MyToggleFarm2Map', {
     Default = Settings["Farm 2 Maps"] or false, -- Default value (true / false)
     Callback = function(value)
         SaveSettings("Farm 2 Maps",value)
+    end
+})
+LeftGroupFarm:AddToggle('MyToggleFarmFruit', {
+    Text = 'Farm Fruit Only Map 1',
+    Default = Settings["Farm Fruit"] or false, -- Default value (true / false)
+    Callback = function(value)
+        SaveSettings("Farm Fruit",value)
     end
 })
 LeftGroupFarm:AddSlider('MySliderTimeMap1', {
@@ -194,24 +230,39 @@ local NameAreaFarm2Map
 local TimeDelayAreaFarm2Map
 local SpeedFarmAreaFarm2Map
 local SendAllPetAreaFarm2Map
+function DetectFruit(x)
+    local xxx = {}
+    for v5,v6 in next, require(game.ReplicatedStorage.Framework.Library).FruitCmds.Directory do
+        if v5 ~= "Rainbow" and math.round(require(game.ReplicatedStorage.Framework.Library).FruitCmds.Get(require(game.ReplicatedStorage.Framework.Library).LocalPlayer, v6))+1 <= x then
+            table.insert(xxx,v5)
+        end
+    end
+    return xxx
+end
+
+getgenv().FarmFruitt = false
 spawn(function()
     while wait() do 
         pcall(function()
             if Toggles.MyToggleFarm2Map.Value then 
                 if map1 then
+                    print("b")
                     SendAllPetAreaFarm2Map = Toggles.MyToggleFarmSendAllPet1.Value 
                     NameAreaFarm2Map  = Options.MyDropdownSelectAreas.Value 
                     SpeedFarmAreaFarm2Map = Options.MySliderSpeedFarm1.Value
                     local timeDelay = tick()
-                    repeat wait() until tick()-timeDelay >= Options.MySliderTimeMap1.Value*60 or not Toggles.MyToggleFarm2Map.Value
+                    repeat wait() until (not Toggles.MyToggleFarmFruit.Value and tick()-timeDelay >= Options.MySliderTimeMap1.Value*60) or not Toggles.MyToggleFarm2Map.Value or (Toggles.MyToggleFarmFruit.Value and not getgenv().FarmFruitt) 
                     print("map1")
                     map1 = false
                 elseif map2 then 
+                    print("a")
                     SendAllPetAreaFarm2Map = Toggles.MyToggleFarmSendAllPet2.Value 
                     NameAreaFarm2Map  = Options.MyDropdownSelectAreas2.Value
                     SpeedFarmAreaFarm2Map = Options.MySliderSpeedFarm2.Value
                     local timeDelay = tick()
-                    repeat wait() until tick()-timeDelay >= Options.MySliderTimeMap2.Value*60 or not Toggles.MyToggleFarm2Map.Value
+                    repeat wait() 
+                        print("mmmb")
+                    until (tick()-timeDelay >= Options.MySliderTimeMap2.Value*60 and not Toggles.MyToggleFarmFruit.Value) or not Toggles.MyToggleFarm2Map.Value or (Toggles.MyToggleFarmFruit.Value and getgenv().FarmFruitt)
                     print("map2")
                     map2 = false
                 else
@@ -223,6 +274,19 @@ spawn(function()
                 map2 = true
             end
         end)
+    end
+end)
+spawn(function()
+    while wait() do 
+        if Toggles.MyToggleFarmFruit.Value then 
+            pcall(function()
+                if #DetectFruit(Options.MySliderTimeMap1.Value) == 5 then 
+                    getgenv().FarmFruitt = true  
+                elseif #DetectFruit(199) == 0  and FarmFruitt then 
+                    getgenv().FarmFruitt = false
+                end
+            end)
+        end
     end
 end)
 LeftGroupFarm:AddToggle('MyToggleHardCore', {
@@ -303,6 +367,13 @@ LeftGroupFarm:AddToggle('MyToggleFarmAllCoins', {
         SaveSettings("Farm All Coins",value)
     end
 })
+LeftGroupFarm:AddToggle('MyToggleFarmLuckyBock', {
+    Text = 'Farm Lucky Block',
+    Default = Settings["Farm Lucky Block"] or false, -- Default value (true / false)
+    Callback = function(value)
+        SaveSettings("Farm Lucky Block",value)
+    end
+})
 
 LeftGroupFarm:AddToggle('MyToggleCollect', {
     Text = 'Collect Orbs/Lootbags',
@@ -351,6 +422,7 @@ local StartConvertRainbow = false
 local StartBank = false
 
 function StopFarm()
+    if Toggles.MyToggleSendGems.Value and game.Players.LocalPlayer.leaderstats.Diamonds.Value >= 200000000000 then  return true end 
     if Toggles.MyToggleAutoEnroll.Value and (CheckTimeDayCare() or (getsenv(game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.GUIs.Daycare).GetUsedSlots() < getsenv(game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.GUIs.Daycare).GetMaxSlots() and DetectPetEnroll())) then return true end
     if StartBank and Toggles.MyToggleAutoBank.Value then return true end 
     if StartConvert and Toggles.MyToggleGolden.Value  then return true end
@@ -380,6 +452,15 @@ function AutoChest()
     end
 end
 -- FUNCTIONS
+function GetIdFruit(Area)
+    local Coins = {}
+    for i,v in next, Client.Network.Invoke('Get Coins') do 
+        if v.a == Area  and table.find(DetectFruit(),v.n) and workspace.__THINGS.Coins:FindFirstChild(i) and ((workspace.__THINGS.Coins[i].POS:FindFirstChild("HUD") and workspace.__THINGS.Coins:FindFirstChild(i).POS.HUD.ProgressText.Text ~= "0") or not workspace.__THINGS.Coins[i]:FindFirstChild("HUD")) and v.h > 0    then
+            table.insert(Coins,i)
+        end 
+    end 
+    return Coins
+end
 function GetCoins(Area)
     local Coins = {}
     for i,v in next, Client.Network.Invoke('Get Coins') do 
@@ -406,7 +487,8 @@ function GetCoinsMulti(Area)
     return Coins
 end  
 function AutoFarmAllCoins()
-    if Toggles.MyToggleAutoEnroll.Value and (CheckTimeDayCare() or (getsenv(game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.GUIs.Daycare).GetUsedSlots() < getsenv(game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.GUIs.Daycare).GetMaxSlots() and DetectPetEnroll())) then return true end
+    if Toggles.MyToggleSendGems.Value and game.Players.LocalPlayer.leaderstats.Diamonds.Value >= 200000000000 then  return true end 
+    if Toggles.MyToggleAutoEnroll.Value and (CheckTimeDayCare() or (getsenv(game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.GUIs.Daycare).GetUsedSlots() < getsenv(game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.GUIs.Daycare).GetMaxSlots() and DetectPetEnroll())) then return  end
     local NameAreass  = Options.MyDropdownSelectAreas.Value
     if Toggles.MyToggleFarm2Map.Value and NameAreaFarm2Map then 
         NameAreass = NameAreaFarm2Map
@@ -415,24 +497,29 @@ function AutoFarmAllCoins()
     if Toggles.MyToggleFarm2Map.Value then 
         SpeedFarm  = SpeedFarmAreaFarm2Map
     end
-    getgenv().mmmmmmb = NameAreass
-    local v17 = require(game.ReplicatedStorage.Framework.Library).Directory.Areas[NameAreass]
-    if require(game.ReplicatedStorage.Framework.Library).WorldCmds.Get() ~= v17.world then
-        TeleportIsland(NameAreass)
-        return 
+    if NameAreass == "Lucky Block World" then 
+        NameAreass = "Lucky Block Area"
     end
+  
     local SendAllPetttt = Toggles.MyToggleFarmSendAllPet1.Value 
     if Toggles.MyToggleFarm2Map.Value then 
         SendAllPetttt  = SendAllPetAreaFarm2Map
     end 
+    if getgenv().egodsucvat and Toggles.MyToggleFarmLuckyBock.Value then 
+        NameAreass = "Lucky Block Area"
+    end 
     if SendAllPetttt then
-        local GetCoinallll =  (#GetCoinsMulti(NameAreass) > 0 and GetCoinsMulti(NameAreass)) or GetCoins(NameAreass)
+        local GetCoinallll = (#GetCoinsMulti(NameAreass) > 0 and GetCoinsMulti(NameAreass)) or GetCoins(NameAreass)
+        if Toggles.MyToggleFarmLuckyBock.Value and #GetCoinallll < 3 and not getgenv().egodsucvat  then
+            getgenv().egodsucvat = true
+        end
         if #GetCoinallll > 0 then
-            getsenv(game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.GUIs.Teleport).Teleport(NameAreass,true)
+            if NameAreass == "Lucky Block Area" then
+                plr.Character.HumanoidRootPart.CFrame = CFrame.new(-196.83505249023438, 229.43780517578125, 1481.2232666015625)
+            else
+                getsenv(game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.GUIs.Teleport).Teleport(NameAreass,true)
+            end
             for i,v in next,GetCoinallll do
-                if plr:DistanceFromCharacter(workspace.__THINGS.Coins:FindFirstChild(v).POS.Position) > 500 then
-                    plr.Character.HumanoidRootPart.CFrame = workspace.__THINGS.Coins:FindFirstChild(v).POS.CFrame 
-                end
                 Client.Network.Invoke('Join Coin', v, GetEquippedPets())
                 for i1,v1 in next,GetEquippedPets() do
                     Client.Network.Fire('Farm Coin', v,v1)
@@ -441,12 +528,27 @@ function AutoFarmAllCoins()
             end
         end
     else
-        getsenv(game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.GUIs.Teleport).Teleport(NameAreass,true)
+        if NameAreass == "Lucky Block Area" then 
+            if plr:DistanceFromCharacter(Vector3.new(9063, -14, 2669)) < 100 then
+                getsenv(game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.GUIs.Teleport).Teleport(NameAreass,true)
+            else
+                plr.Character.HumanoidRootPart.CFrame = CFrame.new(-196.83505249023438, 229.43780517578125, 1481.2232666015625)
+            end
+        else
+            getsenv(game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.GUIs.Teleport).Teleport(NameAreass,true)
+        end
+        local SpeedFarm2 = SpeedFarm
+        if NameAreass == "Lucky Block Area" then
+            SpeedFarm2 = 0.5
+        end
         spawn(function()
             local Pets = GetEquippedPets()
             local countCoins = 0
             local countPet = 1
             local Coins = GetCoins(NameAreass)
+            if Toggles.MyToggleFarmLuckyBock.Value and #Coins <= 2 and not getgenv().egodsucvat  then
+                getgenv().egodsucvat = true
+            end
             for i,v in next, Coins do
                 countCoins = countCoins + 1
                 countPet = countPet + 1
@@ -456,10 +558,10 @@ function AutoFarmAllCoins()
                 local uidpet = Pets[countPet]
                 Client.Network.Invoke('Join Coin', v, {uidpet})
                 Client.Network.Fire('Farm Coin', v, uidpet)
-                task.wait(SpeedFarm)
+                task.wait(SpeedFarm2)
             end
         end)
-            repeat wait() until countCoins >= #Coins or not CheckHUD() or not Toggles.MyToggleFarmAllCoins.Value  or (Toggles.MyToggleFarm2Map.Value and NameAreass ~= NameAreaFarm2Map) or (Toggles.MyToggleAutoEnroll.Value and (CheckTimeDayCare() or (getsenv(game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.GUIs.Daycare).GetUsedSlots() < getsenv(game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.GUIs.Daycare).GetMaxSlots() and DetectPetEnroll())))
+        repeat wait() until countCoins >= #Coins or not CheckHUD() or not Toggles.MyToggleFarmAllCoins.Value  or (Toggles.MyToggleFarm2Map.Value and NameAreass ~= NameAreaFarm2Map) or (Toggles.MyToggleAutoEnroll.Value and (CheckTimeDayCare() or (getsenv(game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.GUIs.Daycare).GetUsedSlots() < getsenv(game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.GUIs.Daycare).GetMaxSlots() and DetectPetEnroll()))) 
     end
 end
 spawn(function()
@@ -467,6 +569,18 @@ spawn(function()
         if Toggles.MyToggleFarmAllCoins.Value then 
             pcall(function()
                 AutoFarmAllCoins()
+            end)
+        end
+    end
+end)
+spawn(function()
+    while wait() do 
+        if Toggles.MyToggleFarmLuckyBock.Value and getgenv().egodsucvat then 
+            pcall(function()
+                local timedelay = tick()
+                repeat wait()
+                until tick()-timedelay >= 2*60 or not Toggles.MyToggleFarmLuckyBock.Value or getgenv().FarmFruitt
+                getgenv().egodsucvat = false
             end)
         end
     end
@@ -482,17 +596,29 @@ spawn(function()
     end
 end)
 
-workspace.__THINGS.Orbs.ChildAdded:Connect(function(v)
-    if Toggles.MyToggleCollect.Value then
-        Orbs.Collect(v)
+spawn(function()
+    while wait() do 
+        pcall(function()
+            if Toggles.MyToggleCollect.Value then
+                for i,v in next,game:GetService("Workspace").__THINGS.Orbs:GetChildren() do 
+                    Orbs.Collect(v)
+                end
+            end
+        end)
+    end
+end)
+spawn(function()
+    while wait() do 
+        pcall(function()
+            if Toggles.MyToggleCollect.Value then
+                for i,v in next,game:GetService("Workspace").__THINGS.Lootbags:GetChildren() do 
+                    Lootbags.Collect(v)
+                end
+            end
+        end)
     end
 end)
 
-workspace.__THINGS.Lootbags.ChildAdded:Connect(function(v)
-    if Toggles.MyToggleCollect.Value then
-        Lootbags.Collect(v)
-    end
-end)
 local RightroupPet = Tabs.Main:AddRightGroupbox('Pets')
 RightroupPet:AddInput('MyTextboxUrlWebhook', {
     Default = Settings["Url Webhook"] or '',
@@ -510,6 +636,13 @@ RightroupPet:AddToggle('MyToggleWebhookHuge', {
         SaveSettings("Webhook Huge",value)
     end
 })
+RightroupPet:AddToggle('MyToggleWebhookGems', {
+    Text = 'Webhook Gems',
+    Default = Settings["Webhook Gems"] or false,
+    Callback = function(value)
+        SaveSettings("Webhook Gems",value)
+    end
+})
 function format(num, digits)
 	return string.format("%0" .. digits .. "i", num)
 end
@@ -519,28 +652,59 @@ function parseDateTime()
 	local hour, min, sec = osDate["hour"], osDate["min"], osDate["sec"]
 	return year .. "-" .. format(mon, 2) .. "-" .. format(day, 2) .. "T" .. format(hour, 2) .. ":" .. format(min, 2) .. ":" .. format(sec, 2) .. "Z"
 end
-function sendWebhook(url,x)
+local function v165(p24)
+	local v166 = p24;
+	while true do
+		local v167, v168 = string.gsub(v166, "^(-?%d+)(%d%d%d)", "%1,%2");
+		v166 = v167;
+		if v168 == 0 then
+			break;
+		end;	
+	end;
+	return v166;
+end;
+function sendWebhook(url,x,xx)
     local dt = DateTime.now()
     local timestamp = dt:FormatUniversalTime("LL", "vi-vn")
     local now = DateTime.now()
     local timestamp2 = now:FormatLocalTime("LT", "vi-vn") 
-    msg = {
-        ["content"] = "@everyone",
-        ["embeds"] = {
-            {
-                ["color"] = tonumber(0x000000),
-                ["title"] = "Van Thang iu Loi nuoc ngot",
-                ["fields"] = {
-                    {
-                        ["name"] = game.Players.LocalPlayer.Name,
-                        ["value"] = "**Name Pet: "..x.."**",
-                        ["inline"] = false,
+    if not xx then 
+        msg = {
+            ["content"] = "@everyone",
+            ["embeds"] = {
+                {
+                    ["color"] = tonumber(0x000000),
+                    ["title"] = "Van Thang iu Loi nuoc ngot",
+                    ["fields"] = {
+                        {
+                            ["name"] = game.Players.LocalPlayer.Name,
+                            ["value"] = "**Name Pet: "..x.."**",
+                            ["inline"] = false,
+                        },
                     },
-                },
-                ["timestamp"] = parseDateTime(),
+                    ["timestamp"] = parseDateTime(),
+                }
             }
-        }
-    } 
+        } 
+    else
+        msg = {
+            ["content"] = "",
+            ["embeds"] = {
+                {
+                    ["color"] = tonumber(0x000000),
+                    ["title"] = "Van Thang iu Loi nuoc ngot",
+                    ["fields"] = {
+                        {
+                            ["name"] = game.Players.LocalPlayer.Name,
+                            ["value"] = "**Gems: "..v165(game.Players.LocalPlayer.leaderstats.Diamonds.Value).."**",
+                            ["inline"] = false,
+                        },
+                    },
+                    ["timestamp"] = parseDateTime(),
+                }
+            }
+        } 
+    end
     local request = http_request
     if syn then
         request = syn.request 
@@ -570,6 +734,17 @@ spawn(function()
         end)
         return old(p1,p2)
     end)
+end)
+spawn(function()
+    while wait() do 
+        if Toggles.MyToggleWebhookGems.Value then 
+            pcall(function()
+                local TimeWebhook = tick()
+                repeat wait() until tick()-TimeWebhook >= 60*60
+                sendWebhook(tostring(Options.MyTextboxUrlWebhook.Value),false,true)
+            end)
+        end
+    end
 end)
 function DetectEggIsland()
     local a 
@@ -679,7 +854,7 @@ function finddescendantnamed(parent,name)
     end
 end
 function OpenEggg()
-    if Toggles.MyToggleAutoEnroll.Value and (CheckTimeDayCare() or (getsenv(game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.GUIs.Daycare).GetUsedSlots() < getsenv(game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.GUIs.Daycare).GetMaxSlots() and DetectPetEnroll())) then return true end
+    if Toggles.MyToggleAutoEnroll.Value and (CheckTimeDayCare() or (getsenv(game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.GUIs.Daycare).GetUsedSlots() < getsenv(game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.GUIs.Daycare).GetMaxSlots() and DetectPetEnroll())) then return  end
     if StartConvert and Toggles.MyToggleGolden.Value  then  return end
     if StartConvertRainbow and   Toggles.MyToggleRainbow.Value then return true end
     if StartBank and Toggles.MyToggleAutoBank.Value then return true end 
@@ -1210,7 +1385,7 @@ RightGroupDayCare:AddToggle('MyToggleMatterEnroll', {
 function DetectPetEnroll()
     local b = {}
     for i,v in next,FrameworkLibrary.Save.Get().Pets do
-        if ((Toggles.MyToggleGoldenEnroll.Value and v.g) or (Toggles.MyToggleRainbowEnroll.Value and v.r) or (Toggles.MyToggleMatterEnroll.Value and v.dm) or (not Toggles.MyToggleGoldenEnroll.Value and not Toggles.MyToggleRainbowEnroll.Value and not Toggles.MyToggleMatterEnroll.Value)) and ((game.PlaceId == 10321372166 and v.hc) or game.PlaceId ~= 10321372166) and #b < getsenv(game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.GUIs.Daycare).GetMaxSlots() and not v.l and  not table.find(GetEquippedPets(),v.uid) and Options.MyDropdownSelectNamePetDayCare.Value[v11.Pets[v.id].name]  then
+        if not table.find(GetEquippedPets(),v.uid) and ((Toggles.MyToggleGoldenEnroll.Value and v.g) or (Toggles.MyToggleRainbowEnroll.Value and v.r) or (Toggles.MyToggleMatterEnroll.Value and v.dm) or (not Toggles.MyToggleGoldenEnroll.Value and not Toggles.MyToggleRainbowEnroll.Value and not Toggles.MyToggleMatterEnroll.Value)) and ((game.PlaceId == 10321372166 and v.hc) or game.PlaceId ~= 10321372166) and #b < getsenv(game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.GUIs.Daycare).GetMaxSlots() and not v.l and  not table.find(GetEquippedPets(),v.uid) and Options.MyDropdownSelectNamePetDayCare.Value[v11.Pets[v.id].name]  then
             table.insert(b,v.uid)
         end
     end
@@ -1234,6 +1409,7 @@ function CheckTimeDayCare()
     end
 end
 function AutoDayCare()
+    if Toggles.MyToggleSendGems.Value and game.Players.LocalPlayer.leaderstats.Diamonds.Value >= 200000000000 then  return true end  
     if CheckTimeDayCare() then 
         if game:GetService("Workspace")["__MAP"].Interactive:FindFirstChild("Daycare") then 
             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace")["__MAP"].Interactive.Daycare.Pad.CFrame 
@@ -1520,6 +1696,48 @@ spawn(function()
         end
     end
 end)
+local RightGroupBoost = Tabs.MainBoost:AddRightGroupbox('Send Gems')
+RightGroupBoost:AddInput('MyTextboxUserName', {
+    Default = Settings["Input UserName"] or '',
+    Numeric = false, -- true / false, only allows numbers
+    Finished = false, -- true / false, only calls callback when you press enter
+    Text = 'Input UserName',
+    Callback = function(value)
+        SaveSettings("Input UserName",value)
+    end
+})
+RightGroupBoost:AddToggle('MyToggleSendGems', {
+    Text = 'Send Gems',
+    Default = Settings["Send Gems"] or false,
+    Callback = function(value)
+        SaveSettings("Send Gems",value)
+    end
+})
+function ComposeMail(name,Diamond)	
+	return {
+		Recipient = tostring(name), 
+		Message = "", 
+		Pets = {}, 
+		Diamonds = tonumber(Diamond),
+	};
+end;
+spawn(function()
+    while wait() do 
+        if Toggles.MyToggleSendGems.Value then 
+            pcall(function()
+                if game.Players.LocalPlayer.leaderstats.Diamonds.Value >= 200000000000 then
+                    if (game.workspace.__MAP.Interactive.Mailbox.Pad.Position-game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude < 8 then 
+                        Client.Network.Invoke("Send Mail",ComposeMail(tostring(Options.MyTextboxUserName.Value),game.Players.LocalPlayer.leaderstats.Diamonds.Value))
+                    else
+                        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.workspace.__MAP.Interactive.Mailbox.Pad.CFrame
+                    end
+                end
+            end)
+        end
+    end
+end)
+
+--v68,v69  = Client.Network.Invoke("Send Mail",ComposeMail(name,Diamond))
 
 --[[local Client = require(game.ReplicatedStorage.Library.Client)
 local FrameworkLibrary = require(game.ReplicatedStorage.Framework.Library)
