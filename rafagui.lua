@@ -2531,3 +2531,8 @@ if game.PlaceId == 6284583030 or game.PlaceId == 10321372166 or game.PlaceId == 
 		end
 	end)
 end
+-- anti afk
+game:service'Players'.LocalPlayer.Idled:connect(function()
+  game:service'VirtualUser':CaptureController()
+  game:service'VirtualUser':ClickButton2(Vector2.new())
+end)
