@@ -1,5 +1,5 @@
 --[[
--- THIS SCRIPT HAS BEEN CODED BY RAFA (discord.gg/MilkUp)
+-- THIS SCRIPT HAS BEEN CODED BY NamG2657 (discord.gg/MilkUp)
 -- DON'T BE A STUPID SKIDDIE THAT STEAL PEOPLE CODE AND PUT ON A SHIT PAID (or "watch ad to get key") SCRIPT
 -- hi Project WD please don't steal my code again thx
 
@@ -22,8 +22,8 @@
 
 
 -- Important Variables
-local SCRIPT_NAME = "Rafa PSX GUI"
-local SCRIPT_VERSION = "v0.4" -- Hey rafa remember to change it before updating lmao
+local SCRIPT_NAME = "Error"
+local SCRIPT_VERSION = "v3.1" -- Hey rafa remember to change it before updating lmao
 
 -- Detect if the script has executed by AutoExec
 local AutoExecuted = false
@@ -510,20 +510,20 @@ if game.PlaceId == 6284583030 or game.PlaceId == 10321372166 or game.PlaceId == 
 	if isfile("UI/ArrayField.lua") then
 		Rayfield = loadstring(readfile("UI/ArrayField.lua"))()
 	else
-		Rayfield = loadstring(game:HttpGet("https://raw.githubusercontent.com/Rafacasari/ArrayField/main/v2.lua"))()
+		Rayfield = loadstring(game:HttpGet("https://raw.githubusercontent.com/NamG2657/Scripting/main/ArrayFieldGUI.lua"))()
 	end
 	
-	-- local Rayfield = (isfile("UI/ArrayField.lua") and loadstring(readfile("UI/ArrayField.lua"))()) or loadstring(game:HttpGet("https://raw.githubusercontent.com/Rafacasari/ArrayField/main/v2.lua"))()
+	-- local Rayfield = (isfile("UI/ArrayField.lua") and loadstring(readfile("UI/ArrayField.lua"))()) or loadstring(game:HttpGet("https://raw.githubusercontent.com/NamG2657/Scripting/main/ArrayFieldGUI.lua"))()
 	assert(Rayfield, "Oopps! Rayfield has not been loaded. Maybe try re-joining?") 
 	
 
 	local Window = Rayfield:CreateWindow({
-	   Name = "Pet Simulator GUI | by Rafa ",
+	   Name = "Pet Simulator GUI | by NamG2657 ",
 	   LoadingTitle = SCRIPT_NAME .. " " .. SCRIPT_VERSION,
-	   LoadingSubtitle = "by Rafa",
+	   LoadingSubtitle = "by NamG2657",
 	   ConfigurationSaving = {
 		  Enabled = true,
-		  FolderName = "Rafa",
+		  FolderName = "NamG2657",
 		  FileName = "PetSimulatorX_" .. tostring(LocalPlayer.UserId)
 	   },
 	   OldTabLayout = true
@@ -531,7 +531,7 @@ if game.PlaceId == 6284583030 or game.PlaceId == 10321372166 or game.PlaceId == 
 	
 	coroutine.wrap(function() 
 		wait(0.5)
-		if not isfile("Rafa/AcceptedTerms.txt") then 
+		if not isfile("NamG2657/AcceptedTerms.txt") then 
 			Window:Prompt({
 				Title = 'Disclaimer',
 				SubTitle = 'Misuse of this script may result in penalties!',
@@ -541,8 +541,8 @@ if game.PlaceId == 6284583030 or game.PlaceId == 10321372166 or game.PlaceId == 
 					Accept = {
 						Name = "Ok",
 						Callback = function()
-							if not isfolder("Rafa") then makefolder("Rafa") end
-							writefile("Rafa/AcceptedTerms.txt", "true")
+							if not isfolder("NamG2657") then makefolder("NamG2657") end
+							writefile("NamG2657/AcceptedTerms.txt", "true")
 						end,
 						
 					}
@@ -599,7 +599,7 @@ if game.PlaceId == 6284583030 or game.PlaceId == 10321372166 or game.PlaceId == 
 	
 	
 	local autoFarmTab = Window:CreateTab("Farm", "13075651575", true)
-	local stats = autoFarmTab:CreateParagraph({Title = "Hello, <b><font color=\"#2B699F\">" .. LocalPlayer.DisplayName .. "</font></b>!", Content = "Thanks for using my script! - Rafa\nMake sure to join us at <b><font color=\"#2B699F\">discord.gg/MilkUp</font></b>"})
+	local stats = autoFarmTab:CreateParagraph({Title = "Hello, <b><font color=\"#2B699F\">" .. LocalPlayer.DisplayName .. "</font></b>!", Content = "Thanks for using my script! - NamG2657\nMake sure to join us at <b><font color=\"#2B699F\">discord.gg/MilkUp</font></b>"})
 	local autoFarmSection = autoFarmTab:CreateSection("Auto Farm", false, false, "7785988164")
 	local enableAutoFarm = false
 	autoFarmTab:CreateToggle({
