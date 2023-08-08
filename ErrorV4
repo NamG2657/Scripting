@@ -1,1 +1,5 @@
-game.Players.LocalPlayer:kick("You have been banned from this experience ( Reason: Using Valyse )")
+getgenv().dathub = true
+while wait() do
+warn"dat hub was ditted"
+wait()
+end
