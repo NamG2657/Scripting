@@ -218,7 +218,7 @@ end
 -- Khởi tạo combinedData với giá trị mặc định
 combinedData = {
     Settings = {
-        autoDeleteEffects = false,
+	autoDeleteEffects = false,
         teleraid = false,
         start = true,
         opeskill = true,
@@ -250,8 +250,6 @@ combinedData = {
         SpecialTraders = {""},
         autochapnhan = false,
         autotrade = false
-        
-        
     }
 }
 
